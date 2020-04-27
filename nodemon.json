@@ -1,0 +1,7 @@
+{
+    "env": {
+        "MONGO_USER": "pradeep",
+        "MONGO_PASSWORD": "testpassword",
+        "MONGO_DEFAULT_DATABASE": "aroma"
+    }
+}

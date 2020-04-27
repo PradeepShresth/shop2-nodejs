@@ -1,0 +1,104 @@
+<%- include('../includes/head.ejs') %>
+</head>
+  <%- include('../includes/navigation.ejs') %>
+
+  <!--================Cart Area =================-->
+  <section class="cart_area">
+      <div class="container">
+          <div class="cart_inner">
+              <div class="table-responsive">
+                  <table class="table">
+                      <thead>
+                          <tr>
+                              <th scope="col">Product</th>
+                              <th scope="col">Price</th>
+                              <th scope="col">Quantity</th>
+                              <th scope="col">Total</th>
+                              <th scope="col">Delete</th>
+                          </tr>
+                      </thead>
+                      <% if (prods.length > 0) { %>
+                        <tbody>
+                            <% for (let product of prods) { %>
+                                <tr>
+                                    <td>
+                                        <div class="media">
+                                            <div class="d-flex cart-image">
+                                                <img src="/<%= product.productId.image %>" alt="">
+                                            </div>
+                                            <div class="media-body">
+                                                <p><%= product.productId.title %></p>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <h5 style="text-align: center;">$<%= product.productId.price %></h5>
+                                    </td>
+                                    <td>
+                                        <h5 style="padding-left: 10px;"><%= product.quantity %></h5>
+                                    </td>
+                                    <td>
+                                        <h5>$<%= product.productId.price * product.quantity %></h5>
+                                    </td>
+                                    <td>
+                                        <form action="/cart-delete-item" method="POST">
+                                            <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                                            <input type="hidden" name="productId" value="<%= product.productId._id %>">
+                                            <button type="submit">Delete</button>
+                                        </form>
+                                    </td>
+                                </tr>
+                            <% } %>
+                            <tr class="bottom_button">
+                                <td>
+
+                                </td>
+                                <td>
+
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+
+                                </td>
+                                <td>
+
+                                </td>
+                                <td>
+                                    <h5>Total</h5>
+                                </td>
+                                <td>
+                                    <h5>$<%= total %></h5>
+                                </td>
+                            </tr>
+                            <tr class="out_button_area">
+                                <td class="d-none-l">
+
+                                </td>
+                                <td class="">
+
+                                </td>
+                                <td>
+
+                                </td>
+                                <td>
+                                    <div class="checkout_btn_inner d-flex align-items-center">
+                                        <a class="gray_btn" href="/products">Continue Shopping</a>
+                                        <form action="/order" method="POST">
+                                            <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                                            <button type="submit" class="primary-btn ml-2" href="/order">Proceed to order</button>
+                                        </form>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    <% } %>
+                  </table>
+              </div>
+          </div>
+      </div>
+  </section>
+  <!--================End Cart Area =================-->
+
+  <%- include('../includes/footer.ejs') %>
+  <%- include('../includes/end.ejs') %>

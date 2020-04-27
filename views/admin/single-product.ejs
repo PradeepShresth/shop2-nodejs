@@ -1,0 +1,41 @@
+<%- include('../includes/head.ejs') %>
+</head>
+  <%- include('../includes/navigation.ejs') %>
+  
+  <!--================Single Product Area =================-->
+	<div class="product_image_area">
+		<div class="container">
+			<div class="row s_product_inner">
+				<div class="col-lg-6">
+					<div class="owl-carousel owl-theme s_Product_carousel">
+						<div class="single-prd-item">
+							<img class="img-fluid" src="\<%= prod.image %>" alt="">
+						</div>
+						<!-- <div class="single-prd-item">
+							<img class="img-fluid" src="img/category/s-p1.jpg" alt="">
+						</div>
+						<div class="single-prd-item">
+							<img class="img-fluid" src="img/category/s-p1.jpg" alt="">
+						</div> -->
+					</div>
+				</div>
+				<div class="col-lg-5 offset-lg-1">
+					<div class="s_product_text">
+						<h3><%= prod.title %></h3>
+						<h2>$<%= prod.price %></h2>
+						<ul class="list">
+							<li><a class="active" href="#"><span>Category</span> : <%= prod.category %></a></li>
+						</ul>
+						<p><%= prod.description %></p>
+						<div class="product_count" style="padding-top: 200px;">
+							<a class="button primary-btn" href="/admin/edit-product/<%= prod._id %>">Edit Product</a>               
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!--================End Single Product Area =================-->
+
+	<%- include('../includes/footer.ejs') %>
+	<%- include('../includes/end.ejs') %>

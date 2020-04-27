@@ -1,0 +1,125 @@
+<%- include('../includes/head.ejs') %>
+</head>
+  <%- include('../includes/navigation.ejs') %>
+  
+  <!--================Single Product Area =================-->
+	<div class="product_image_area">
+		<div class="container">
+			<div class="row s_product_inner">
+				<div class="col-lg-6">
+					<div class="owl-carousel owl-theme s_Product_carousel">
+						<div class="single-prd-item">
+							<img class="img-fluid" src="\<%= prod.image %>" alt="">
+						</div>
+						<!-- <div class="single-prd-item">
+							<img class="img-fluid" src="img/category/s-p1.jpg" alt="">
+						</div>
+						<div class="single-prd-item">
+							<img class="img-fluid" src="img/category/s-p1.jpg" alt="">
+						</div> -->
+					</div>
+				</div>
+				<div class="col-lg-5 offset-lg-1">
+					<div class="s_product_text">
+						<h3><%= prod.title %></h3>
+						<h2>$<%= prod.price %></h2>
+						<ul class="list">
+							<li><a class="active" href="#"><span>Category</span> : <%= prod.category %></a></li>
+							<li></li>
+						</ul>
+						<p></p>
+						<div class="product_count">
+							<form action="/cart" method="POST">
+              					<label for="qty">Quantity:</label>
+								<input type="number" name="qty" id="sst" value="1" title="Quantity:" class="input-text qty">
+								<input type="hidden" name="_csrf" value="<%= csrfToken %>">
+								<input type="hidden" name="productId" value="<%= prod._id %>">
+								<button class="button primary-btn" style="margin-top: 20px;">Add to Cart</button>
+							</form>       
+						</div>
+						<div class="card_area d-flex align-items-center">
+							<a class="icon_btn" href="#"><i class="lnr lnr lnr-diamond"></i></a>
+							<a class="icon_btn" href="#"><i class="lnr lnr lnr-heart"></i></a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!--================End Single Product Area =================-->
+
+	<!--================Product Description Area =================-->
+	<section class="product_description_area">
+		<div class="container">
+			<ul class="nav nav-tabs" id="myTab" role="tablist">
+				<li class="nav-item">
+					<a class="nav-link" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Description</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link active" id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact"
+					 aria-selected="false">Comments</a>
+				</li>
+			</ul>
+			<div class="tab-content" id="myTabContent">
+				<div class="tab-pane fade" id="home" role="tabpanel" aria-labelledby="home-tab">
+					<p><%= prod.description %></p>
+				</div>
+				<div class="tab-pane fade show active" id="contact" role="tabpanel" aria-labelledby="contact-tab">
+					<div class="row">
+						<% if (prod.comment.items.length > 0) { %>
+							<div class="col-lg-6">
+								<div class="comment_list">
+									<% prod.comment.items.forEach( comment => { %>
+										<div class="review_item">
+											<div class="media">
+												<div class="d-flex">
+													<img src="img/product/review-1.png" alt="">
+												</div>
+												<div class="media-body">
+													<h4><%= comment.username %></h4>
+													<h5><%= comment.date.toString().split('(')[0] %></h5>
+												</div>
+											</div>
+											<p><%= comment.comment %></p>
+										</div>
+										<hr>
+									<% }) %>
+								</div>
+							</div>
+						<% } else { %>
+							<h3>No comments yet!!</h3>
+						<% } %>
+						<div class="col-lg-6">
+							<div class="review_box">
+								<h4>Post a comment</h4>
+								<form class="row contact_form" action="/comment" method="post" id="contactForm">
+									<input type="hidden" name="productId" value="<%= prod._id %>">
+									<input type="hidden" name="_csrf" value="<%= csrfToken %>">
+									<div class="col-md-12">
+										<div class="form-group">
+											<input type="text" class="form-control" id="name" name="name" placeholder="Your Full name" required>
+										</div>
+									</div>
+									<div class="col-md-12">
+										<div class="form-group">
+											<textarea class="form-control" name="comment" id="message" rows="1" placeholder="Message" style="min-height: 150px;" required></textarea>
+										</div>
+									</div>
+									<div class="col-md-12 text-right">
+										<button type="submit" value="submit" class="btn primary-btn">Submit Now</button>
+									</div>
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	<!--================End Product Description Area =================-->
+
+	
+
+
+	<%- include('../includes/footer.ejs') %>
+	<%- include('../includes/end.ejs') %>

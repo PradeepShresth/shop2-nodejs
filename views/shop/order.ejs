@@ -1,0 +1,74 @@
+<%- include('../includes/head.ejs') %>
+</head>
+  <%- include('../includes/navigation.ejs') %>
+  
+  <!--================Order Details Area =================-->
+  <% if (orders.length > 0) { %>
+    <h3 style="text-align: center; padding-top: 50px;">Order Details</h3>
+    <% for (let order of orders) { %>
+      <% let totalPrice = 0 %>
+      <section class="order_details section-margin--small">
+        <div class="container">
+          <div class="order_details_table">
+            <div class="table-responsive">
+              <table class="table">
+                <tr>
+                  <td><h2><%= order._id %></h2></td>
+                  <td style="float: right;"><h2><%= order.date %></h2></td>
+                </tr>
+              </table>
+            </div>
+            <div class="table-responsive">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th scope="col">Product</th>
+                    <th scope="col">Quantity</th>
+                    <th scope="col">Total</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <% order.products.forEach( prod => { %>
+                    <tr>
+                      <td>
+                        <p><%= prod.product.title %></p>
+                      </td>
+                      <td>
+                        <h5>x <%= prod.quantity %></h5>
+                      </td>
+                      <td>
+                        <p>$<%= prod.product.price * prod.quantity %></p>
+                      </td>
+                      <% totalPrice += prod.product.price * prod.quantity %>
+                    </tr>
+                  <% }) %>
+                  <tr>
+                    <td>
+                      <h4>Total</h4>
+                    </td>
+                    <td>
+                      <h5></h5>
+                    </td>
+                    <td>
+                      <h4>$<%= totalPrice %></h4>
+                    </td>
+                  </tr>
+                  <form action="/invoice/<%= order._id %>">
+                    <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                    <button class="button primary-btn" type="submit">Download Invoice</button>
+                  </form>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </section>
+    <% } %>
+  <% } else { %>
+    <h1>No Orders found</h1>
+  <% } %>
+  <!--================End Order Details Area =================-->
+
+
+  <%- include('../includes/footer.ejs') %>
+  <%- include('../includes/end.ejs') %>

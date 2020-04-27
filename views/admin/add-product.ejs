@@ -1,0 +1,70 @@
+<%- include('../includes/head.ejs') %>
+</head>
+  <%- include('../includes/navigation.ejs') %>
+  
+  <!--================Login Box Area =================-->
+	<section class="login_box_area section-margin">
+		<div class="container">
+			<div class="row">
+				<div class="col-8" style="margin: auto;">
+					<h4 style="text-align: center; padding-left: 50px; font-size: 30px;">
+						<% if (!editing) { %>
+							Add Product
+						<% } else { %>
+							Edit Product
+						<% } %>
+					</h4>
+					<form action="<% if (editing) { %>/admin/edit-product<% } else { %>/admin/add-product<% } %>" method="POST" enctype="multipart/form-data">
+						<div class="form-group row">
+							<label for="title" class="col-sm-2 col-form-label">Product Title</label>
+							<div class="col-sm-10">
+								<input
+									type="text" class="form-control" id="title" name="title"
+									value="<% if (editing) { %><%= product.title %><% } %>"
+								>
+							</div>
+						</div>
+						<div class="form-group row">
+							<label for="price" class="col-sm-2 col-form-label">Price</label>
+							<div class="col-sm-2">
+								<input
+									 type="number" class="form-control" id="price" name="price"
+									 value="<% if (editing) { %><%= product.price %><% } %>"
+								>
+							</div>
+							<div class="custom-file col-sm-5">
+								<input type="file" class="custom-file-input" id="image" name="image">
+								<label class="custom-file-label" for="image"></label>
+							</div>
+						</div>
+						<div class="form-group row">
+							<label for="category" class="col-sm-2 col-form-label">Category</label>
+							<div class="col-sm-10">
+								<input
+									type="text" class="form-control" id="category" name="category"
+									value="<% if (editing) { %><%= product.category %><% } %>"
+								>
+							</div>
+						</div>
+						<div class="form-group row">
+							<label for="description" class="col-sm-2 col-form-label">Description</label>
+							<div class="col-sm-10">
+								<textarea class="form-control" id="description" rows="8" name="description">
+									<% if (editing) { %><%= product.description %><% } %>
+								</textarea>
+							</div>
+						</div>
+						<div class="col-sm-12 form-group">
+							<input type="hidden" name="_csrf" value="<%= csrfToken %>">
+							<input type="hidden" name="productId" value="<% if (editing) { %><%= product._id %><% } %>">
+							<button type="submit" value="submit" class="btn btn-primary" style="width: 200px; float: right;"><% if (editing) { %>Update Product<% } else { %>Add Product<% } %></button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</section>
+	<!--================End Login Box Area =================-->
+
+  <%- include('../includes/footer.ejs') %>
+  <%- include('../includes/end.ejs') %>
